@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: build composer
-      uses: composer
+      uses: composer/composer
     - run: composer install
     - name: build assets
       uses: webimp/node
