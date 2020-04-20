@@ -19,17 +19,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: build assets
-        uses: webimp/node@v1.0.0
+
       - name: Install Dependencies
         run: npm install
+        
       - name: Run build
         run: npm run build
+        
       - name: deploy file to server
         uses: wlixcc/SFTP-Deploy-Action@v1.0
         with:
-          username: 'ubuntu'
+          username: 'webimp'
           server: '${{ secrets.SERVER_IP }}'
           ssh_private_key: ${{ secrets.WEBIMPCO_SSH_PRIVATE_KEY }}
           local_path: './dist/*'
