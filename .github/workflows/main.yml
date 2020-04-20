@@ -12,21 +12,30 @@ on:
 env:
   WEBIMPCO_SSH_PRIVATE_KEY: ${{ secrets.WEBIMPCO_SSH_PRIVATE_KEY }}
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build-deploy:
-    # The type of runner that the job will run on
+  deploy_job:
     runs-on: ubuntu-latest
+    name: build&deploy
     steps:
-    - name: build composer
-      uses: composer/composer@v1.10.0
-    - run: composer install
-    - name: build assets
-      uses: webimp/node@v1.0.0
-    - run: |
-        npm install
-        npm run build
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: build assets
+        uses: webimp/node@v1.0.0
+      - name: Install Dependencies
+        run: npm install
+      - name: Run build
+        run: npm run build
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          username: 'ubuntu'
+          server: '${{ secrets.SERVER_IP }}'
+          ssh_private_key: ${{ secrets.WEBIMPCO_SSH_PRIVATE_KEY }}
+          local_path: './dist/*'
+          remote_path: 'public_html/alvian'
+          args: '-o ConnectTimeout=5'
+                  
 #     - name: deploy
 #       uses: webimp/php-72-apache 
 #       run: |
