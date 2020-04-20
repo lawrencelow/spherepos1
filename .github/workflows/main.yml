@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ staging ]
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  WEBIMPCO_SSH_PRIVATE_KEY: ${{ secrets.WEBIMPCO_SSH_PRIVATE_KEY }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+    - name: build composer
+      uses: composer
+      run: composer install
+    - name: build assets
+      uses: webimp/node
+      run: |
+        npm install
+        npm run build
+#     - name: deploy
+#       uses: webimp/php-72-apache 
+#       run: |
+#         eval $(ssh-agent -s)
+#         ssh-add <(echo "$WEBIMPCO_SSH_PRIVATE_KEY")
+#         mkdir -p ~/.ssh
+#         export THEME_PATH="/opt/bitnami/apps/wordpress/htdocs/wp-content/themes/visense"
+#         rm -rf .git
+#         && rm -rf .gitignore
+#         && rm -rf ./vendor/
+#         tar -cvzf ../theme.tgz -C $CI_PROJECT_DIR .
+#         && cd ..
+      
