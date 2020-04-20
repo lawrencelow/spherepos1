@@ -23,7 +23,7 @@ jobs:
       uses: composer/composer@v1.10.0
     - run: composer install
     - name: build assets
-      uses: webimp/node
+      uses: webimp/node@v1.0.0
     - run: |
         npm install
         npm run build
