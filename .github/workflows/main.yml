@@ -20,11 +20,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: npm install
+#       - name: Install Dependencies
+#         run: npm install
         
-      - name: Run build
-        run: npm run build
+#       - name: Run build
+#         run: npm run build
         
       - name: deploy file to server
         uses: wlixcc/SFTP-Deploy-Action@v1.0
