@@ -21,10 +21,10 @@ jobs:
     steps:
     - name: build composer
       uses: composer
-      run: composer install
+    - run: composer install
     - name: build assets
       uses: webimp/node
-      run: |
+    - run: |
         npm install
         npm run build
 #     - name: deploy
